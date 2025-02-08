@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Calistoga&family=Noto+Sans+JP:wght@100..900&display=swap');
+        body {
+            background-color: #c0e0f5;
+            overflow: hidden;
+            margin: 0;
+            position: relative;
+            font-family: "Calistoga", serif;
+            padding: 4%;
+        }
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        h1, h3, h4 {
+            margin: 0;
+        }
+
+        header {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        header h1 {
+            color: #2166a5;
+        }
+
+        main {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 20px;
+        }
+
+        .left {
+            padding: 10px;
+            height: 100%;
+        }
+
+        .left .menu {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .left .post-menu {
+            background-color: #71A3CE;
+            border-radius: 5px;
+            box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.17);
+            color: white;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            margin-bottom: 7px;
+            transition: transform 0.2s ease, background-color 0.3s ease;
+            height: 50px;
+        }
+
+        .left .post-menu:hover {
+            transform: scale(1.05);
+            background-color: #8FC1EC;
+        }
+
+        .left .post-menu h3 {
+            margin: 0;
+            padding: 0;
+        }
+
+        .pos-title {
+            margin-left: 5px;
+        }
+
+        .left .post-menu .pos-num {
+            margin-right: 10px;
+            font-weight: bold;
+        }
+
+        .right {
+            background-color: white;
+            border: 2px solid #71A3CE;
+            border-radius: 5px;
+            padding: 15px;
+            height: 100%;
+        }
+
+        .vertical-line {
+            border:  1px solid white;
+            height: 80%;
+            width: 0;
+            margin: 10px 10px 0 0;
+        }
+
+        .cloud {
+            position: absolute;
+            opacity: 0.8;
+            z-index: -1;
+            width: 80px; /* 幅を指定 */
+            height: auto; /* 高さは自動で調整 */
+            max-width: 130px; /* 最大幅 */
+            max-height: 130px; /* 最大高さ */
+            object-fit: contain; /* 画像が親要素内に収まるように調整 */
+            object-position: center; /* 画像の中央を基準に配置 */
+        }
+
+
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px) translateX(0px);
+                opacity: 0.8;
+            }
+            50% {
+                transform: translateY(20px) translateX(30px);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(0px) translateX(0px);
+                opacity: 0.8;
+            }
+        }
+
+        .post-header img {
+            width: 150px;
+            height: 150px;
+            border-radius: 5px;
+            border: 2px solid #71A3CE;
+        }
+
+        .post-header {
+            display: flex;
+        }
+
+        .title_and_author {
+            margin-left: 3%;
+        }
+
+        .post-header h1 {
+            font-size: xx-large;
+            color: #2166a5;
+        }
+
+        .post-header h4 {
+            font-size: large;
+            color: #71A3CE;
+        }
+
+        .title_and_author {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+        }
+
+        .content {
+            margin-top: 5%;
+            color: #2166a5;
+            font-family: "Calistoga", serif;
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>POST</h1>
+        <hr style="border: 2px solid #2166a5; width: 98%;">
+    </header>
+    <main>
+        <div class="left">
+            <div class="menu">
+                <!-- メニュー項目がここに動的に追加されます -->
+            </div>
+        </div>
+        <div class="right post-content">
+            <div class="post-header">
+                <div class="img">
+                    <img id="postImg" src="image_sample.png" />
+                </div>
+                <div class="title_and_author">
+                    <h1 id="postTitle">Title</h1>
+                    <h4 id="postAuthor">kyumin</h4>
+                </div>
+            </div>
+            <div class="content" id="postContent">
+                <!-- 投稿内容はJavaScriptで追加 -->
+            </div>
+        </div>
+    </main>
+
+    <script>
+        let postsData = []; // 投稿データを格納するための変数
+
+        // json-serverからデータを取得
+        fetch('http://localhost:3000/posts')
+            .then(response => response.json())
+            .then(posts => {
+                postsData = posts; // データを変数に格納
+
+                // 最初の投稿を表示する例
+                const post = posts[0];
+
+                // 投稿内容をHTMLに反映
+                document.getElementById('postTitle').textContent = post.title;
+                document.getElementById('postAuthor').textContent = post.author;
+                document.getElementById('postContent').textContent = post.content;
+                document.getElementById('postImg').src = post.postImg;
+
+                // メニューにも投稿のタイトルを追加
+                const postMenu = document.querySelector('.left .menu');
+                posts.forEach((post, index) => {
+                    const menuItem = document.createElement('div');
+                    menuItem.classList.add('post-menu');
+                    menuItem.innerHTML =  
+                        `<h3 class="pos-num">${index + 1}</h3>
+                         <div class="vertical-line"></div>
+                         <h3 class="pos-title">${post.title}</h3>`;
+                    menuItem.addEventListener('click', () => updatePostContent(index)); // クリックイベント追加
+                    postMenu.appendChild(menuItem);
+                });
+            })
+            .catch(error => {
+                console.error('Error loading posts:', error);
+            });
+
+        // クリックされたメニューに対応する投稿内容を表示する関数
+        function updatePostContent(index) {
+            const post = postsData[index]; // 選択された投稿を取得
+
+            // 投稿内容を右側に反映
+            document.getElementById('postTitle').textContent = post.title;
+            document.getElementById('postAuthor').textContent = post.author;
+            document.getElementById('postContent').textContent = post.content;
+            document.getElementById('postImg').src = post.postImg;
+        }
+
+        // 雲のアニメーション作成
+        document.addEventListener("DOMContentLoaded", () => {
+            const cloudCount = 12; // 雲の数を調整
+            const clouds = [];
+            const minDistance = 100; // 雲同士の最小距離（ピクセル）
+
+            function getRandomPosition() {
+                let x, y, isValid;
+                do {
+                    x = Math.random() * window.innerWidth;
+                    y = Math.random() * window.innerHeight;
+                    isValid = clouds.every(cloud => {
+                        const dx = cloud.x - x;
+                        const dy = cloud.y - y;
+                        return Math.sqrt(dx * dx + dy * dy) > minDistance;
+                    });
+                } while (!isValid);
+                return { x, y };
+            }
+
+            function createCloud() {
+                const cloud = document.createElement('img');
+                cloud.src = 'cloud.png';
+                cloud.classList.add('cloud');
+                cloud.onload = () => {
+                    document.body.appendChild(cloud);
+
+                    const size = Math.random() * 80 + 50; // 50px ~ 130px のサイズ
+                    cloud.style.width = `${size}px`;
+
+                    // ランダムな位置に配置
+                    const { x, y } = getRandomPosition();
+                    cloud.style.left = `${x}px`;
+                    cloud.style.top = `${y}px`;
+
+                    // 位置を記録
+                    clouds.push({ x, y });
+
+                    // アニメーションを設定（雲がランダムな方向に動く）
+                    cloud.style.animation = `float ${Math.random() * 10 + 6}s ease-in-out infinite alternate`;
+                };
+                cloud.onerror = () => {
+                    console.error('Failed to load cloud.png');
+                };
+            }
+
+            // 雲を作成
+            for (let i = 0; i < cloudCount; i++) {
+                createCloud();
+            }
+        });
+    </script>
+</body>
+</html>

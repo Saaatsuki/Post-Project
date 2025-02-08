@@ -1,0 +1,136 @@
+{
+    "posts": [
+      {
+        "id": 1,
+        "title": "json-serverの使い方",
+        "author": "kyumin",
+        "content": "json-serverの使い方は、Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+        "postImg": "https://www.sanrio.co.jp/wp-content/uploads/2022/06/gallery-cogimyun1.png"
+      },
+      {
+        "id": 2,
+        "title": "投稿テスト",
+        "author": "kyumin",
+        "content": "POSTリクエストを使って作成された投稿データ",
+        "postImg": "https://www.sanrio.co.jp/wp-content/uploads/2022/06/gallery-cogimyun2.png"
+      },
+      {
+        "id": 3,
+        "title": "REST APIとは",
+        "author": "admin",
+        "content": "REST APIは、Representational State Transferの略であり、ウェブでデータをやり取りするためのアーキテクチャスタイルの一つです。",
+        "postImg": "https://www.sanrio.co.jp/wp-content/uploads/2022/06/gallery-cogimyun3.png"
+      },
+      {
+        "id": 4,
+        "title": "GraphQLの紹介",
+        "author": "developer1",
+        "content": "GraphQLはFacebookによって開発されたAPIクエリ言語であり、クライアントが必要なデータのみを選択して取得できるようにします。",
+        "postImg": "https://www.sanrio.co.jp/wp-content/uploads/2022/06/gallery-cogimyun4.png"
+      },
+      {
+        "id": 5,
+        "title": "JavaScriptの非同期処理",
+        "author": "dev_kyumin",
+        "content": "JavaScriptの非同期処理には、コールバック関数、Promise、async/awaitがあります。これにより、非同期なコードの実行を制御することができます。",
+        "postImg": "https://www.sanrio.co.jp/wp-content/uploads/2022/06/gallery-cogimyun5.png"
+      },
+      {
+        "id": 6,
+        "title": "JavaScriptの非同期処理",
+        "author": "dev_kyumin",
+        "content": "JavaScriptの非同期処理には、コールバック関数、Promise、async/awaitがあります。これにより、非同期なコードの実行を制御することができます。",
+        "postImg": "https://www.sanrio.co.jp/wp-content/uploads/2022/06/gallery-cogimyun5.png"
+      },
+      {
+        "id": 7,
+        "title": "JavaScriptの非同期処理",
+        "author": "dev_kyumin",
+        "content": "JavaScriptの非同期処理には、コールバック関数、Promise、async/awaitがあります。これにより、非同期なコードの実行を制御することができます。",
+        "postImg": "https://www.sanrio.co.jp/wp-content/uploads/2022/06/gallery-cogimyun5.png"
+      },
+      {
+        "id": 8,
+        "title": "JavaScriptの非同期処理",
+        "author": "dev_kyumin",
+        "content": "JavaScriptの非同期処理には、コールバック関数、Promise、async/awaitがあります。これにより、非同期なコードの実行を制御することができます。",
+        "postImg": "https://www.sanrio.co.jp/wp-content/uploads/2022/06/gallery-cogimyun5.png"
+      }
+    ],
+    "comments": [
+      {
+        "id": 1,
+        "postId": 1,
+        "author": "commenter1",
+        "content": "素晴らしい記事をありがとうございます！"
+      },
+      {
+        "id": 2,
+        "postId": 2,
+        "author": "commenter2",
+        "content": "json-serverの使い方をもっと詳しく知りたいです。"
+      },
+      {
+        "id": 3,
+        "postId": 3,
+        "author": "admin",
+        "content": "REST APIに関する追加資料も共有していただけますか？"
+      },
+      {
+        "id": 4,
+        "postId": 4,
+        "author": "developer2",
+        "content": "GraphQLとREST APIを比較する記事があるといいですね。"
+      },
+      {
+        "id": 5,
+        "postId": 5,
+        "author": "dev_john",
+        "content": "async/awaitの使い方についてのサンプルコードがあると助かります！"
+      },
+      {
+        "id": 6,
+        "postId": 5,
+        "author": "kyumin",
+        "content": "こぎみゅん可愛い😍"
+      }
+    ],
+    "profile": [
+      {
+        "id": 1,
+        "name": "Kyumin",
+        "role": "管理者",
+        "bio": "フルスタック開発者として、さまざまな技術を使用しています。"
+      },
+      {
+        "id": 2,
+        "name": "Developer1",
+        "role": "バックエンドエンジニア",
+        "bio": "GraphQLとREST APIの開発に興味があります。"
+      },
+      {
+        "id": 3,
+        "name": "Commenter1",
+        "role": "ユーザー",
+        "bio": "開発系のブログをよく読んでいます。"
+      },
+      {
+        "id": 4,
+        "name": "Dev John",
+        "role": "フロントエンド開発者",
+        "bio": "ReactとJavaScriptを主に扱っています。"
+      },
+      {
+        "id": 5,
+        "name": "こぎみゅん",
+        "role": "小麦の妖精",
+        "bio": "おにぎりになること"
+      },
+      {
+        "id": 6,
+        "name": "シナモロール",
+        "role": "男の子の子犬",
+        "bio": "レストランのシェフになってみんなを幸せにすること"
+      }
+    ]
+  }
