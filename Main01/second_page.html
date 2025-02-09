@@ -102,7 +102,7 @@
         }
 
         .right {
-            background-color: white;
+            background-color: #71A3CE;
             border: 2px solid #71A3CE;
             border-radius: 5px;
             padding: 15px;
@@ -110,7 +110,7 @@
         }
 
         .vertical-line {
-            border:  1px solid white;
+            border: 1px solid white;
             height: 80%;
             width: 0;
             margin: 10px 10px 0 0;
@@ -126,6 +126,7 @@
             max-height: 130px;
             object-fit: contain;
             object-position: center;
+            animation: float 8s ease-in-out infinite alternate;
         }
 
         @keyframes float {
@@ -174,13 +175,91 @@
             justify-content: space-around;
         }
 
-        .content {
+        .form {
             margin-top: 5%;
             color: #2166a5;
-            font-family: "Calistoga", serif;
+            font-family: "Noto Sans JP", serif;
         }
 
-        #enpitsuImage {
+        p {
+            margin: 0 0 5px 0;
+        }
+
+        .newpost {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .newpost input {
+            height: 50px;
+            width: 500px;
+            border-radius: 8px;
+            border: 2px solid #2166a5;
+            box-shadow: inset 5px 5px 10px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .newpost textarea {
+            height: 100px;
+            width: 500px;
+            border-radius: 8px;
+            border: 2px solid #2166a5;
+            box-shadow: inset 5px 5px 10px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .send {
+            margin-top: 40px;
+        }
+
+        button {
+            margin-top: 40px;
+            height: 50px;
+            width: 500px;
+            border-radius: 8px;
+            background-color: #2166a5;
+            border: none;
+            color: white;
+            box-shadow: 5px 5px 10px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        button:hover {
+            background-color: #307ac0;
+            transform: scale(1.009);
+        }
+
+        .newpost-image {
+            position: relative;
+        }
+
+        .file-input {
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        .custom-button {
+            background-color: #c0e0f5;
+            color: white;
+            text-align: center;
+            line-height: 40px;
+            border-radius: 5px;
+            height: 50px;
+            width: 500px;
+            cursor: pointer;
+            display: block;
+            box-shadow: 5px 5px 10px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .custom-button:hover {
+            background-color: #92c1eb;
+            transform: scale(1.2);
+        }
+
+        #ieImage {
             cursor: pointer;
             transition: transform 0.3s ease-in-out, filter 0.3s ease-in-out;
         }
@@ -221,6 +300,7 @@
                 filter: saturate(1);
             }
         }
+
     </style>
 </head>
 <body>
@@ -228,7 +308,7 @@
         <div class="he-ti">
             <img src="taiyo.png" />
             <h1>POST</h1>
-            <img class="animated-button" src="enpitsu.png" alt="enpitsu image" id="enpitsuImage" onclick="animateImage();" />
+            <img class="animated-button" src="ie.png" alt="ie image" id="ieImage" onclick="window.location.href='main.html';" />
         </div>
         <hr style="border: 2px solid #2166a5; width: 98%;">
     </header>
@@ -238,40 +318,48 @@
                 <!-- メニュー項目がここに動的に追加されます -->
             </div>
         </div>
-        <div class="right post-content">
-            <div class="post-header">
-                <div class="img">
-                    <img id="postImg" src="" />
-                </div>
-                <div class="title_and_author">
-                    <h1 id="postTitle">Title</h1>
-                    <h4 id="postAuthor">kyumin</h4>
-                </div>
+        <div class="right newpost">
+            <div class="form newpost-id">
+                <p>ID</p>
+                <input type="text" id="postId">
             </div>
-            <div class="content" id="postContent">
-                <!-- 投稿内容はJavaScriptで追加 -->
+            <div class="form newpost-title">
+                <p>Title</p>
+                <input type="text" id="postTitle">
             </div>
+            <div class="form newpost-author">
+                <p>Author</p>
+                <input type="text" id="postAuthor">
+            </div>
+            <div class="form newpost-text">
+                <p>Content</p>
+                <textarea id="postContent"></textarea>
+            </div>
+            <div class="newpost-image">
+                <input class="file-input" type="file" id="postImage" />
+                <div class="custom-button">Upload Image</div>
+            </div>
+            <button onclick="submitPost()">Submit</button>
         </div>
     </main>
-
     <script>
         let postsData = []; // 投稿データを格納するための変数
-
+    
         // json-serverからデータを取得
         fetch('http://localhost:3000/posts')
             .then(response => response.json())
             .then(posts => {
                 postsData = posts; // データを変数に格納
-
+    
                 // 最初の投稿を表示する例
                 const post = posts[0];
-
+    
                 // 投稿内容をHTMLに反映
-                document.getElementById('postTitle').textContent = post.title;
-                document.getElementById('postAuthor').textContent = post.author;
-                document.getElementById('postContent').textContent = post.content;
+                document.getElementById('postTitle').value = post.title; // valueを使用
+                document.getElementById('postAuthor').value = post.author; // valueを使用
+                document.getElementById('postContent').value = post.content; // valueを使用
                 document.getElementById('postImg').src = post.postImg;
-
+    
                 // メニューにも投稿のタイトルを追加
                 const postMenu = document.querySelector('.left .menu');
                 posts.forEach((post, index) => {
@@ -288,79 +376,111 @@
             .catch(error => {
                 console.error('Error loading posts:', error);
             });
-
+    
         // クリックされたメニューに対応する投稿内容を表示する関数
         function updatePostContent(index) {
             const post = postsData[index]; // 選択された投稿を取得
-
+    
             // 投稿内容を右側に反映
-            document.getElementById('postTitle').textContent = post.title;
-            document.getElementById('postAuthor').textContent = post.author;
-            document.getElementById('postContent').textContent = post.content;
+            document.getElementById('postTitle').value = post.title; // valueを使用
+            document.getElementById('postAuthor').value = post.author; // valueを使用
+            document.getElementById('postContent').value = post.content; // valueを使用
             document.getElementById('postImg').src = post.postImg;
+        }
+    
+        // 投稿を送信する関数
+        function submitPost() {
+            const postId = document.getElementById('postId').value;
+            const postTitle = document.getElementById('postTitle').value;
+            const postAuthor = document.getElementById('postAuthor').value;
+            const postContent = document.getElementById('postContent').value;
+    
+            // 新規ポストが作成された場合、IDが存在しない場合のみ
+            if (postId) {
+                postsData.push({ postId, postTitle, postAuthor, postContent });
+                alert('Post submitted successfully!');
+                // ポスト一覧を更新するなどの処理を追加できます
+            } else {
+                alert('ID is required!');
+            }
+        }
+        function submitPost() {
+            const postId = document.getElementById('postId').value;
+            const postTitle = document.getElementById('postTitle').value;
+            const postAuthor = document.getElementById('postAuthor').value;
+            const postContent = document.getElementById('postContent').value;
+
+            // 新規ポストが作成された場合、IDが存在しない場合のみ
+            if (postId) {
+                postsData.push({ postId, postTitle, postAuthor, postContent });
+                alert('Post submitted successfully!');
+                // ポスト一覧を更新するなどの処理を追加できます
+            } else {
+                alert('ID is required!');
+            }
         }
 
         function animateImage() {
-            const image = document.getElementById("enpitsuImage");
+            const image = document.getElementById("ieImage");
             image.classList.add("animate-click");
             
             // アニメーション後にページ遷移
             setTimeout(() => {
-                window.location.href = 'second_page.html';
+                window.location.href = 'main.html';
             }, 600); // アニメーションが終わるまで待機
-        }
+        }        
 
         // 雲のアニメーション作成
         document.addEventListener("DOMContentLoaded", () => {
-            const cloudCount = 12; // 雲の数を調整
-            const clouds = [];
-            const minDistance = 100; // 雲同士の最小距離（ピクセル）
+        const cloudCount = 12; // 雲の数を調整
+        const clouds = [];
+        const minDistance = 100; // 雲同士の最小距離（ピクセル）
 
-            function getRandomPosition() {
-                let x, y, isValid;
-                do {
-                    x = Math.random() * window.innerWidth;
-                    y = Math.random() * window.innerHeight;
-                    isValid = clouds.every(cloud => {
-                        const dx = cloud.x - x;
-                        const dy = cloud.y - y;
-                        return Math.sqrt(dx * dx + dy * dy) > minDistance;
-                    });
-                } while (!isValid);
-                return { x, y };
-            }
+        function getRandomPosition() {
+            let x, y, isValid;
+            do {
+                x = Math.random() * window.innerWidth;
+                y = Math.random() * window.innerHeight;
+                isValid = clouds.every(cloud => {
+                    const dx = cloud.x - x;
+                    const dy = cloud.y - y;
+                    return Math.sqrt(dx * dx + dy * dy) > minDistance;
+                });
+            } while (!isValid);
+            return { x, y };
+        }
 
-            function createCloud() {
-                const cloud = document.createElement('img');
-                cloud.src = 'cloud.png';
-                cloud.classList.add('cloud');
-                cloud.onload = () => {
-                    document.body.appendChild(cloud);
+        function createCloud() {
+            const cloud = document.createElement('img');
+            cloud.src = 'cloud.png';
+            cloud.classList.add('cloud');
+            cloud.onload = () => {
+                document.body.appendChild(cloud);
 
-                    const size = Math.random() * 80 + 50; // 50px ~ 130px のサイズ
-                    cloud.style.width = `${size}px`;
+                const size = Math.random() * 80 + 50; // 50px ~ 130px のサイズ
+                cloud.style.width = `${size}px`;
 
-                    // ランダムな位置に配置
-                    const { x, y } = getRandomPosition();
-                    cloud.style.left = `${x}px`;
-                    cloud.style.top = `${y}px`;
+                // ランダムな位置に配置
+                const { x, y } = getRandomPosition();
+                cloud.style.left = `${x}px`;
+                cloud.style.top = `${y}px`;
 
-                    // 位置を記録
-                    clouds.push({ x, y });
+                // 位置を記録
+                clouds.push({ x, y });
 
-                    // アニメーションを設定
-                    const duration = Math.random() * 10 + 6; // ランダムなアニメーション時間
-                    cloud.style.animation = `float ${duration}s ease-in-out infinite`;
+                // アニメーションを設定
+                const duration = Math.random() * 10 + 6; // ランダムなアニメーション時間
+                cloud.style.animation = `float ${duration}s ease-in-out infinite`;
 
-                    // 画面外であれば削除
-                    setTimeout(() => cloud.remove(), duration * 1000);
-                };
-            }
+                // 画面外であれば削除
+                // setTimeout(() => cloud.remove(), duration * 1000);
+            };
+        }
 
-            for (let i = 0; i < cloudCount; i++) {
-                createCloud();
-            }
-        });
+        for (let i = 0; i < cloudCount; i++) {
+            createCloud();
+        }
+    });
     </script>
 </body>
 </html>

@@ -15,7 +15,7 @@
             padding: 4%;
         }
 
-        main img {
+        img {
             width: 100%;
             height: 100%;
             object-fit: cover;
@@ -27,7 +27,6 @@
         }
 
         header {
-            width: 100%;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -38,17 +37,6 @@
 
         header h1 {
             color: #2166a5;
-        }
-
-        header img {
-            height: 25px;
-        }
-
-        .he-ti {
-            display: grid;
-            grid-template-columns: 1fr 50fr 1fr;
-            justify-items: center;
-            align-items: center;
         }
 
         main {
@@ -120,13 +108,15 @@
             position: absolute;
             opacity: 0.8;
             z-index: -1;
-            width: 80px;
-            height: auto;
-            max-width: 130px;
-            max-height: 130px;
-            object-fit: contain;
-            object-position: center;
+            width: 80px; /* 幅を指定 */
+            height: auto; /* 高さは自動で調整 */
+            max-width: 130px; /* 最大幅 */
+            max-height: 130px; /* 最大高さ */
+            object-fit: contain; /* 画像が親要素内に収まるように調整 */
+            object-position: center; /* 画像の中央を基準に配置 */
         }
+
+
 
         @keyframes float {
             0% {
@@ -180,56 +170,11 @@
             font-family: "Calistoga", serif;
         }
 
-        #enpitsuImage {
-            cursor: pointer;
-            transition: transform 0.3s ease-in-out, filter 0.3s ease-in-out;
-        }
-
-        .animate-click {
-            animation: pulse 0.6s ease-in-out, rotate 1s ease-in-out forwards, colorChange 0.6s ease-in-out forwards;
-        }
-
-        @keyframes pulse {
-            0% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.2);
-            }
-            100% {
-                transform: scale(1);
-            }
-        }
-
-        @keyframes rotate {
-            0% {
-                transform: rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-
-        @keyframes colorChange {
-            0% {
-                filter: saturate(1);
-            }
-            50% {
-                filter: saturate(2);
-            }
-            100% {
-                filter: saturate(1);
-            }
-        }
     </style>
 </head>
 <body>
     <header>
-        <div class="he-ti">
-            <img src="taiyo.png" />
-            <h1>POST</h1>
-            <img class="animated-button" src="enpitsu.png" alt="enpitsu image" id="enpitsuImage" onclick="animateImage();" />
-        </div>
+        <h1>POST</h1>
         <hr style="border: 2px solid #2166a5; width: 98%;">
     </header>
     <main>
@@ -241,7 +186,7 @@
         <div class="right post-content">
             <div class="post-header">
                 <div class="img">
-                    <img id="postImg" src="" />
+                    <img id="postImg" src="image_sample.png" />
                 </div>
                 <div class="title_and_author">
                     <h1 id="postTitle">Title</h1>
@@ -300,16 +245,6 @@
             document.getElementById('postImg').src = post.postImg;
         }
 
-        function animateImage() {
-            const image = document.getElementById("enpitsuImage");
-            image.classList.add("animate-click");
-            
-            // アニメーション後にページ遷移
-            setTimeout(() => {
-                window.location.href = 'second_page.html';
-            }, 600); // アニメーションが終わるまで待機
-        }
-
         // 雲のアニメーション作成
         document.addEventListener("DOMContentLoaded", () => {
             const cloudCount = 12; // 雲の数を調整
@@ -348,15 +283,15 @@
                     // 位置を記録
                     clouds.push({ x, y });
 
-                    // アニメーションを設定
-                    const duration = Math.random() * 10 + 6; // ランダムなアニメーション時間
-                    cloud.style.animation = `float ${duration}s ease-in-out infinite`;
-
-                    // 画面外であれば削除
-                    setTimeout(() => cloud.remove(), duration * 1000);
+                    // アニメーションを設定（雲がランダムな方向に動く）
+                    cloud.style.animation = `float ${Math.random() * 10 + 6}s ease-in-out infinite alternate`;
+                };
+                cloud.onerror = () => {
+                    console.error('Failed to load cloud.png');
                 };
             }
 
+            // 雲を作成
             for (let i = 0; i < cloudCount; i++) {
                 createCloud();
             }
