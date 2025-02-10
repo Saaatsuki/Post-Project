@@ -109,6 +109,11 @@
             height: 100%;
         }
 
+        .form {
+            display: flex;
+            flex-direction: column;
+        }
+
         .vertical-line {
             border: 1px solid white;
             height: 80%;
@@ -229,6 +234,7 @@
 
         .newpost-image {
             position: relative;
+            margin-top: 27px;
         }
 
         .file-input {
@@ -242,9 +248,13 @@
         }
 
         .custom-button {
-            background-color: #c0e0f5;
-            color: white;
+            font-family: "Noto Sans JP", serif;
+            font-weight: 100;
+            font-size: small;
+            display: flex;
             text-align: center;
+            background-color: #c0e0f5;
+            color: #2166a5;
             line-height: 40px;
             border-radius: 5px;
             height: 50px;
@@ -319,63 +329,169 @@
             </div>
         </div>
         <div class="right newpost">
-            <div class="form newpost-id">
-                <p>ID</p>
-                <input type="text" id="postId">
-            </div>
-            <div class="form newpost-title">
-                <p>Title</p>
-                <input type="text" id="postTitle">
-            </div>
-            <div class="form newpost-author">
-                <p>Author</p>
-                <input type="text" id="postAuthor">
-            </div>
-            <div class="form newpost-text">
-                <p>Content</p>
-                <textarea id="postContent"></textarea>
-            </div>
-            <div class="newpost-image">
-                <input class="file-input" type="file" id="postImage" />
-                <div class="custom-button">Upload Image</div>
-            </div>
-            <button onclick="submitPost()">Submit</button>
+            <form id="postForm">
+                <div class="form newpost-id">
+                    <label for="postId">ID</label>
+                    <input type="text" id="postId">
+                </div>
+                <div class="form newpost-title">
+                    <label for="postTitle">Title</label>
+                    <input type="text" id="postTitle">
+                </div>
+                <div class="form newpost-author">
+                    <label for="postAuthor">Author</label>
+                    <input type="text" id="postAuthor">
+                </div>
+                <div class="form newpost-text">
+                    <label for="postContent">Content</label>
+                    <textarea id="postContent"></textarea>
+                </div>
+                <div class="newpost-image">
+                    <input class="file-input" type="file" id="postImage" />
+                    <div class="custom-button">Upload Image</div>
+                </div>
+                <button type="submit" onclick="submitPost()">Submit</button>
+            </form>
+            
         </div>
     </main>
     <script>
-        let postsData = []; // 投稿データを格納するための変数
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.getElementById("postForm");
+            const apiUrl = "http://localhost:3000/posts";
+
+            // フォーム送信時の処理
+            form.addEventListener("submit", function (event) {
+                event.preventDefault(); // デフォルトの送信を防ぐ
+
+                const postId = document.getElementById("postId").value;
+                const title = document.getElementById("postTitle").value;
+                const author = document.getElementById("postAuthor").value;
+                const content = document.getElementById("postContent").value;
+                const imageFile = document.getElementById("postImage").files[0];
+
+                // 画像を Base64 に変換（非同期処理）
+                const reader = new FileReader();
+                reader.onloadend = function () {
+                    const imageData = reader.result; // Base64データ
+
+                    const postData = {
+                        id: postId,
+                        title: title,
+                        author: author,
+                        content: content,
+                        image: imageData
+                    };
+
+                    if (postId) {
+                        // 既存データの更新
+                        fetch(`${apiUrl}`, {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify(postData)
+                        }).then(response => response.json())
+                        .then(() => {
+                            alert("投稿を更新しました！");
+                            form.reset();
+                            loadPosts(); // 更新後のデータを再取得
+                        });
+                    } else {
+                        // 新規データの追加
+                        fetch(apiUrl, {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify(postData)
+                        }).then(response => response.json())
+                        .then(() => {
+                            alert("投稿を追加しました！");
+                            form.reset();
+                            loadPosts(); // 更新後のデータを再取得
+                        });
+                    }
+                };
+
+                if (imageFile) {
+                    reader.readAsDataURL(imageFile); // 画像をBase64変換
+                } else {
+                    reader.onloadend(); // 画像なしの場合でも実行
+                }
+            });
+
+            // 投稿一覧を読み込む関数
+            function loadPosts() {
+                fetch(apiUrl)
+                    .then(response => response.json())
+                    .then(data => {
+                        const postList = document.getElementById("postList");
+                        postList.innerHTML = ""; // 一覧をリセット
+
+                        data.forEach(post => {
+                            const li = document.createElement("li");
+                            li.innerHTML = `
+                                <strong>${post.title}</strong> by ${post.author} <br>
+                                ${post.content} <br>
+                                <img src="${post.image}" width="100"><br>
+                                <button onclick="editPost(${post.id}, '${post.title}', '${post.author}', '${post.content}', '${post.image}')">編集</button>
+                                <button onclick="deletePost(${post.id})">削除</button>
+                            `;
+                            postList.appendChild(li);
+                        });
+                    });
+            }
+
+            // 編集ボタンを押したとき
+            window.editPost = function (id, title, author, content, image) {
+                document.getElementById("postId").value = id;
+                document.getElementById("postTitle").value = title;
+                document.getElementById("postAuthor").value = author;
+                document.getElementById("postContent").value = content;
+            };
+
+            // 削除ボタンを押したとき
+            window.deletePost = function (id) {
+                fetch(`${apiUrl}/${id}`, { method: "DELETE" })
+                    .then(() => {
+                        alert("投稿を削除しました！");
+                        loadPosts();
+                    });
+            };
+
+            // 初回データロード
+            loadPosts();
+        });
+
+
     
         // json-serverからデータを取得
         fetch('http://localhost:3000/posts')
-            .then(response => response.json())
-            .then(posts => {
-                postsData = posts; // データを変数に格納
-    
-                // 最初の投稿を表示する例
-                const post = posts[0];
-    
-                // 投稿内容をHTMLに反映
-                document.getElementById('postTitle').value = post.title; // valueを使用
-                document.getElementById('postAuthor').value = post.author; // valueを使用
-                document.getElementById('postContent').value = post.content; // valueを使用
-                document.getElementById('postImg').src = post.postImg;
-    
-                // メニューにも投稿のタイトルを追加
-                const postMenu = document.querySelector('.left .menu');
-                posts.forEach((post, index) => {
-                    const menuItem = document.createElement('div');
-                    menuItem.classList.add('post-menu');
-                    menuItem.innerHTML =  
-                        `<h3 class="pos-num">${index + 1}</h3>
-                         <div class="vertical-line"></div>
-                         <h3 class="pos-title">${post.title}</h3>`;
-                    menuItem.addEventListener('click', () => updatePostContent(index)); // クリックイベント追加
-                    postMenu.appendChild(menuItem);
+        .then(response => response.json())
+        .then(posts => {
+            postsData = posts;
+            const menuContainer = document.querySelector('.menu');
+
+            menuContainer.innerHTML = ""; // 既存のメニューをクリア
+            posts.forEach(post => {
+                const menuItem = document.createElement('div');
+                menuItem.classList.add('post-menu');
+
+                menuItem.innerHTML = `
+                    <span class="pos-num">${post.id}</span>
+                    <div class="vertical-line"></div>
+                    <h3 class="pos-title">${post.title}</h3>
+                `;
+
+                menuItem.addEventListener('click', () => {
+                    document.getElementById('postId').value = post.id;
+                    document.getElementById('postTitle').value = post.title;
+                    document.getElementById('postAuthor').value = post.author;
+                    document.getElementById('postContent').value = post.content;
                 });
-            })
-            .catch(error => {
-                console.error('Error loading posts:', error);
+
+                menuContainer.appendChild(menuItem);
             });
+        })
+        .catch(error => console.error('Error fetching posts:', error));
+
     
         // クリックされたメニューに対応する投稿内容を表示する関数
         function updatePostContent(index) {

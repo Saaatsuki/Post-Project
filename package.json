@@ -1,7 +1,7 @@
 {
   "scripts": {
     "start": "...",
-    "server": "json-server -p 3001 --watch db.json"
+    "server": "json-server -p 3000 --watch db.json"
   },
   "dependencies": {
     "json-server": "^1.0.0-beta.3"
