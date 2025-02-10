@@ -257,6 +257,33 @@
     <script>
         let postsData = []; // 投稿データを格納するための変数
 
+        document.getElementById("postForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            const id = document.getElementById("postId").value;
+            const title = document.getElementById("postTitle").value;
+            const author = document.getElementById("postAuthor").value;
+            const content = document.getElementById("postContent").value;
+            const postImg = document.getElementById("postImage").value;
+
+            // サーバーにPOSTリクエストを送る
+            fetch('/updatePost', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ postId, postTitle, postAuthor, postContent, postImage })
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+
+
         // json-serverからデータを取得
         fetch('http://localhost:3000/posts')
             .then(response => response.json())

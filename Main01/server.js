@@ -1,40 +1,46 @@
 const express = require('express');
-const bodyParser = require('body-parser');
-const { Low, JSONFile } = require('lowdb');
-
-// Expressの設定
+const fs = require('fs');
 const app = express();
 const port = 3000;
 
-// DB設定
-const db = new Low(new JSONFile('db.json'));
-db.data = db.data || { posts: [] };
+app.use(express.json()); // JSONデータを受け取る
 
-// BodyParserの設定
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-
-// 投稿データを取得するAPI
-app.get('/posts', (req, res) => {
-    res.json(db.data.posts);
-});
+const dbFilePath = 'db.json';
 
 // 投稿データを更新するAPI
-app.post('/updatePost', async (req, res) => {
-    const { id, title, author, content } = req.body;
+app.post('/updatePost', (req, res) => {
+    const { id, title, author, content, postImg } = req.body;
 
-    // IDが一致する投稿を探して更新
-    const postIndex = db.data.posts.findIndex(post => post.id === id);
-    if (postIndex !== -1) {
-        db.data.posts[postIndex] = { id, title, author, content };
-        await db.write();
-        res.status(200).json({ message: 'Post updated successfully!' });
-    } else {
-        res.status(404).json({ message: 'Post not found' });
-    }
+    fs.readFile(dbFilePath, 'utf8', (err, data) => {
+        if (err) {
+            return res.status(500).json({ message: 'Failed to read file.' });
+        }
+
+        const dbData = JSON.parse(data);
+
+        // posts 配列から ID が一致するものを探す
+        const postIndex = dbData.posts.findIndex(post => post.id == id);
+
+        if (postIndex !== -1) {
+            // 既存の投稿を更新
+            dbData.posts[postIndex] = { id, title, author, content, postImg };
+            res.json({ message: 'Post updated successfully' });
+        } else {
+            // 新規投稿を追加
+            const newPost = { id, title, author, content, postImg };
+            dbData.posts.push(newPost);
+            res.json({ message: 'Post added successfully' });
+        }
+
+        // 更新したデータを db.json に書き込む
+        fs.writeFile(dbFilePath, JSON.stringify(dbData, null, 2), 'utf8', (err) => {
+            if (err) {
+                return res.status(500).json({ message: 'Failed to save file.' });
+            }
+        });
+    });
 });
 
-// サーバー起動
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
 });
