@@ -62,10 +62,19 @@ document.addEventListener('DOMContentLoaded', function() {
               commentsList.appendChild(commentDiv);
             });
           } else {
-            commentsList.innerHTML = '<p>コメントはありません</p>';
+            commentsList.innerHTML = '<div class="comments-msg"><p>コメントはありません</p></div>';
           }
         })
         .catch(error => console.error('Error fetching comments:', error));
     }
+  });
+
+menuDiv.addEventListener('click', () => {
+    // すべてのメニュー項目から active クラスを削除
+    document.querySelectorAll('.menu').forEach(div => div.classList.remove('active'));
+    // クリックされた項目に active クラスを追加
+    menuDiv.classList.add('active');
+    // 投稿詳細を表示
+    displayPost(post);
   });
   
