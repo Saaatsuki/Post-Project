@@ -1,57 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Main</title>
-    <link rel="stylesheet" href="main.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Main</title>
+  <link rel="stylesheet" href="main.css" />
 </head>
 <body>
-    <header>
-        <div class="header-title">
-            <img class="cogimyun" src="https://www.sanrio.co.jp/wp-content/themes/sanrio2022/common/images/digital/h1_char01.png" />
-            <h1>Post Page</h1>
+  <header>
+    <div class="header-title">
+      <img class="cogimyun" src="https://www.sanrio.co.jp/wp-content/themes/sanrio2022/common/images/digital/h1_char01.png" />
+      <h1>Post Page</h1>
+    </div>
+    <div class="change_button">
+      <img class="animated-button" src="cogimyon.png" alt="ichigo image" id="ichigoImage" onclick="window.location.href='add_edit.html';" />
+    </div>
+  </header>
+  <main>
+    <div class="left menu-list">
+      <!-- メニュー項目はJSで動的生成 -->
+    </div>
+    <div class="right post-info" id="postInfomation">
+      <div class="image_and_comments">
+        <div class="post-img">
+          <img id="image" src="" alt="Post Image" />
         </div>
-        <div class="change_button"><img class="animated-button" src="cogimyon.png" alt="ichigo image" id="ichigoImage" onclick="window.location.href='add_edit.html';" /></div>
-
-    </header>
-    <main>
-        <div class="left menu-list">
-            <div class="menu">
-                <div class="id-number"><p id="id">01</p></div>
-                <h3 id="title">Title</h3>
-            </div>
+        <div class="comments">
+          <div class="comments-img"><img src="comment.png" alt="Comments Icon" /></div>
+          <div class="comments-list">
+            <!-- コメントはJSで動的生成 -->
+          </div>
         </div>
-        <div class="right post-info" id="postInfomation">
-            <div class="image_and_comments">
-                <div class="post-img">
-                    <img src="" />
-                </div>
-                <div class="comments">
-                    <div class="comments-img"><img src="comment.png" /></div>
-                    <div class="comments-list">
-                        <div class="com">
-                            <div class="author"><p id="auther">auther</p></div>
-                            <div class="comments-msg"><p id="comments">素晴らしい記事をありがとうございます！</p></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="vertical-line"></div>
-            <div class="post-details">
-                <div class="post_title_and_author">
-                    <div class="right_title"><h1>Title</h1></div>
-                    <div class="right_author"><h3>author</h3></div>
-                </div>    
-                <hr>
-                <div class="post-contents">
-                    <p>json-serverの使い方は、Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-                </div>
-            </div>
+      </div>
+      <div class="vertical-line"></div>
+      <div class="post-details">
+        <div class="post_title_and_author">
+          <div class="right_title"><h1 id="detailTitle">Title</h1></div>
+          <div class="right_author"><h3 id="detailAuthor">author</h3></div>
+        </div>    
+        <hr />
+        <div class="post-contents">
+          <p id="content">
+            json-serverの使い方は、Lorem Ipsum is simply dummy text of the printing and typesetting industry...
+          </p>
         </div>
-    </main>
-    <script src="menu.js"></script>
-    <script>
-    </script>
+      </div>
+    </div>
+  </main>
+  <script src="menu.js"></script>
 </body>
 </html>
