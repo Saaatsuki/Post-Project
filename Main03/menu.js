@@ -69,12 +69,3 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 
-menuDiv.addEventListener('click', () => {
-    // すべてのメニュー項目から active クラスを削除
-    document.querySelectorAll('.menu').forEach(div => div.classList.remove('active'));
-    // クリックされた項目に active クラスを追加
-    menuDiv.classList.add('active');
-    // 投稿詳細を表示
-    displayPost(post);
-  });
-  

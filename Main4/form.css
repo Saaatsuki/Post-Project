@@ -61,56 +61,91 @@ main {
 .post .margin {
     width: 430px;
     height: 900px;
-    display: flex;
-    flex-direction: column;
-    /* align-items: center; */
+    display: grid;
+    grid-template-rows: 3fr 1fr;
     background-image: url("sukekitty.png"); /* 背景画像を指定 */
     background-size: 200px; /* 画面全体をカバーする */
     background-position: 265px 739px; /* 画像を中央配置 */
     background-repeat: no-repeat; /* 画像を繰り返さない */
+
 }
 
-.margin .author p{
-    color: #2166A5; 
-    font-size: larger;   
-    margin: 10px 0;
-}
-
-.image {
+.form {
     display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
     justify-content: center;
-
 }
 
-.image img {
+.form input ,textarea{
     width: 100%;
-    border: 2px solid #FFE100;
+    height: 50px;
     border-radius: 8px;
-    box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.03);
+    border: none;
+    background-color: #FFF7B8;
+    box-shadow: inset 5px 5px 5px 5px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    padding: 10px;
 }
 
-.Title_and_Comment {
-    margin-top: 20px;
-    display: flex;
-    color: #2166A5;
+.form input:hover {
+    background-color: #F3A2A8;
 }
 
-.Title h3 {
+.form input:focus {
+    background-color: #F3A2A8;
+}
+
+.form textarea {
+    width: 100%;
+    height: 50px;
+}
+
+.form textarea:hover {
+    background-color: #F3A2A8;
+}
+
+.form textarea:active {
+    border: 2px solid #FFE100;
+} 
+
+.form textarea:focus {
+    background-color: #F3A2A8;
+}
+
+
+
+.form-lists {
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+}
+
+label {
     margin: 0;
-    font-size: x-large;
 }
 
-.Comments-Button {
-    display: flex;
-    align-items: center;
+.submit-button {
+    margin-top: 50px;
+
 }
 
-.Comments-Button img{
-    height: 30px;
-    margin-left: 20px;
+.submit-button button {
+    width: 100%;
+    height: 50px;
+    border-radius: 8px;
+    border: none;
+    background-color: #2166A5;
+    color: #FFF7B8;
+    box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.1);
 }
 
-.content {
-    color: #2166A5;
+.submit-button button:hover {
+    background-color: #2a73b8;
+    transform: scale(1.01);
+}
+
+.submit-button button:active {
+    background-color: #3581c9;
+    transform: scale(0.9);
 }
 
