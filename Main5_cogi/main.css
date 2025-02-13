@@ -1,0 +1,124 @@
+html {
+    background-color: black;
+}
+
+header {
+    font-family: 'Calistoga', sans-serif;
+}
+
+.text-outline {
+    /* -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent; */
+    -webkit-text-stroke: 1.5px #DF5656;
+}
+
+/* 画像を浮遊させるアニメーション */
+@keyframes float_myun {
+    0% {
+        transform: translateY(3px); /* 初期状態 */
+    }
+    50% {
+        transform: translateY(-3px); /* 上に浮かぶ */
+    }
+    100% {
+        transform: translateY(0px); /* 元の位置に戻る */
+    }
+}
+
+.nyun_anime {
+    animation: float_myun 3s ease-in-out infinite; /* アニメーションの時間、繰り返しの設定 */
+}
+
+@keyframes float_myon {
+    0% {
+        transform: translateY(0px) rotate(0deg); /* 初期状態 */
+    }
+    50% {
+        transform: translateY(3px) rotate(5deg); /* 上に浮かぶ */
+    }
+    100% {
+        transform: translateY(-3px) rotate(-5deg); /* 元の位置に戻る */
+    }
+}
+
+.myon_anime {
+    animation: float_myon 10s ease-in-out infinite; /* アニメーションの時間、繰り返しの設定 */
+}
+
+@keyframes float_background_myun1 {
+    0% {
+        transform: translate(210px, -10px) rotate(4deg); /* 初期位置 */
+    }
+    20% {
+        transform: translate(280px, -40px) rotate(-4deg); /* 初期位置 */
+    }
+
+    100% {
+        transform: translate(210px, -10px) rotate(4deg); /* 元の位置に戻る */
+    }
+}
+
+.myun_back_anime1 {
+    animation: float_background_myun1 7s ease-in-out infinite; /* アニメーションの時間、繰り返しの設定 */
+}
+
+@keyframes float_background_myun2 {
+    0% {
+        transform: translate(-60px, 120px) rotate(4deg); /* 初期位置 */
+    }
+    70% {
+        transform: translate(50px, 80px) rotate(-4deg); /* 初期位置 */
+    }
+
+    100% {
+        transform: translate(-60px, 120px) rotate(4deg); /* 元の位置に戻る */
+    }
+}
+
+.myun_back_anime2 {
+    animation: float_background_myun2 3s ease-in-out infinite; /* アニメーションの時間、繰り返しの設定 */
+}
+
+h3 {
+    /* font-family: "Noto Sans JP", serif; */
+    font-size: 25px;
+    font-weight: 700;
+    color: white;
+}
+
+main h1 {
+    font-size: 30px;
+    color: #F091A0;
+}
+
+.menu_box {
+    box-shadow: inset 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* スクロールバーの幅 */
+::-webkit-scrollbar {
+    width: 5px;  /* 横スクロールバーの幅 */
+    height: 0px; /* 縦スクロールバーの高さ */
+}
+
+/* スクロールバーの背景 */
+::-webkit-scrollbar-track {
+    background-color: white; /* スクロールバーのトラック（背景） */
+    border-radius: 10px;
+}
+
+/* スクロールバーのハンドル（実際に動かす部分） */
+::-webkit-scrollbar-thumb {
+    background-color: #F091A0; /* スクロールバーの色 */
+    border-radius: 10px;
+}
+
+/* ハンドルがホバーされた時の状態 */
+::-webkit-scrollbar-thumb:hover {
+    background-color: #e07c7c; /* ホバー時に変わる色 */
+}
+
+/* スクロールバーが動くときの効果 */
+::-webkit-scrollbar-button {
+    background-color: transparent;
+}
