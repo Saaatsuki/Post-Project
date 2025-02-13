@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Form</title>
+    <title>Post Form</title>
     <link rel="stylesheet" href="form.css">
+    <script src="form.js"></script>
 </head>
 <body>
     <header>
@@ -22,27 +23,59 @@
                         <div class="input-form"><input type="text" id="formId"></div>
                     </div>
                     <div class="form">
-                        <div><label for="formId">Auther</label></div>
-                        <div class="input-form"><input type="text" id="formId"></div>
+                        <div><label for="formAuthor">Author</label></div>
+                        <div class="input-form"><input type="text" id="formAuthor"></div>
                     </div>
                     <div class="form">
                         <div><label for="formTitle">Title</label></div>
-                        <div class="input-form"><input type="text" id="formId"></div>
+                        <div class="input-form"><input type="text" id="formTitle"></div>
                     </div>
                     <div class="form">
-                        <div><label for="forContent">Content</label></div>
-                        <div class="input-form"><textarea name="Content" id="forContent"></textarea></div>
+                        <div><label for="formContent">Content</label></div>
+                        <div class="input-form"><textarea name="Content" id="formContent"></textarea></div>
                     </div>
                     <div class="form">
-                        <div><label for="formImage">Image : URL</label></div>
+                        <div><label for="formImage">Image URL</label></div>
                         <div class="input-form"><input type="text" id="formImage"></div>
                     </div>
                 </div>
                 <div class="submit-button">
-                    <button type="submit">Submit</button>
+                    <button type="submit" onclick="submitForm()">Submit</button>
                 </div>
             </div>
         </div>
     </main>
+    <script>
+        function submitForm() {
+            const formId = document.getElementById('formId').value;
+            const formAuthor = document.getElementById('formAuthor').value;
+            const formTitle = document.getElementById('formTitle').value;
+            const formContent = document.getElementById('formContent').value;
+            const formImage = document.getElementById('formImage').value;
+
+            const postData = {
+                id: formId,
+                title: formTitle,
+                author: formAuthor,
+                content: formContent,
+                postImg: formImage
+            };
+
+            fetch('http://localhost:3000/posts', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(postData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert('Post submitted successfully');
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
 </body>
 </html>
