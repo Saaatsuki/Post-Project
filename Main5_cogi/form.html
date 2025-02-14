@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Page</title>
+    <link href="https://fonts.googleapis.com/css2?family=Calistoga&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="form.css">
+</head >
+<body class="bg-[#FFF0F2] w-[402px] h-[874px] overflow-hidden">
+    <header class="grid grid-cols-[2fr_3fr_1.7fr] items-center w-full h-[93px] bg-[url('gingam.png')]">
+        <div class="h-full"><img class="h-[87px] nyun_anime" src="myun_ebi.png" alt="Myun Ebi" onclick="window.location.href='main.html';"></div>
+        <div class="flex justify-center text-outline ml-[7px]"><h1 class="text-[38px] text-white">Post Page</h1></div>
+        <div class="flex justify-end"><img class="h-[70%] m-[20px] myon_anime" src="myon.png" alt="Myon" onclick="window.location.href='form.html';"></div>
+    </header>
+    <div class="w-full h-[4px] bg-[#DF5656]"></div>
+    <main class="h-[781px] w-full relative">
+        <!-- 背景画像の配置 -->
+
+        <!-- コンテンツを背景の上に配置 -->
+        <div class="absolute top-0 left-0 right-0 bottom-0 flex items-center justify-center">
+            <div class="w-[352px] h-[725px] overflow-y-auto bg-white rounded-[10px] shadow-[inset_0_4px_6px_rgba(0,0,0,0.1)]">
+                <div class="absolute top-[20px] left-[-140px] ">
+                    <img class="myun_back_anime1  object-cover" src="sekesekemyun1.png" alt="Background 1">
+                    <img class="myun_back_anime2 absolute top-[400px] left-[200px] object-cover" src="sukesukemyun2.png"   alt="Background 2">
+                </div>
+                <div>
+                    <div><label for="formId">ID</label></div>
+                    <div><input type="text" id="formId"></div>
+                </div>
+                <div>
+                    <div><label for="formAuthor">Author</label></div>
+                    <div><input type="text" id="formAuthor"></div>
+                </div>
+                <div>
+                    <div><label for="formTitle">Title</label></div>
+                    <div><input type="text" id="formTitle"></div>
+                </div>
+                <div>
+                    <div><label for="formContent">Content</label></div>
+                    <div><textarea name="formContent" id="formContent"></textarea></div>
+                </div>
+                <div>
+                    <div><label for="formImage">Image: URL</label></div>
+                    <div><input type="text" id="formImage"></div>
+                </div>
+                
+            </div>
+            
+        </div>
+        
+    </main>
+</body>
+</html>
